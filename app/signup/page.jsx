@@ -112,7 +112,7 @@ export default function SignupPage() {
                   value={formData.firstName}
                   onChange={handleChange}
                   required
-                  className="h-12"
+                  className="h-12 border-2 focus:border-black transition-colors"
                 />
               </div>
               <div className="space-y-2">
@@ -123,7 +123,7 @@ export default function SignupPage() {
                   value={formData.lastName}
                   onChange={handleChange}
                   required
-                  className="h-12"
+                  className="h-12 border-2 focus:border-black transition-colors"
                 />
               </div>
             </div>
@@ -137,7 +137,7 @@ export default function SignupPage() {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="h-12"
+                className="h-12 border-2 focus:border-black transition-colors"
               />
             </div>
 
@@ -150,7 +150,7 @@ export default function SignupPage() {
                 value={formData.password}
                 onChange={handleChange}
                 required
-                className="h-12"
+                className="h-12 border-2 focus:border-black transition-colors"
               />
             </div>
 
@@ -163,7 +163,7 @@ export default function SignupPage() {
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 required
-                className="h-12"
+                className="h-12 border-2 focus:border-black transition-colors"
               />
             </div>
 

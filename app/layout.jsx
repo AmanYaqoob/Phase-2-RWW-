@@ -4,7 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 export const metadata = {
   title: "Retreat World Wide",
   description: "Find and book the perfect retreat for your next adventure",
-    generator: 'v0.dev'
+    generator: 'RWW.dev'
 }
 
 export default function RootLayout({ children }) {

@@ -72,7 +72,7 @@ export default function LoginPage() {
     <div className="min-h-screen grid grid-cols-1 md:grid-cols-2">
       {/* Left side - Image with overlay text */}
       <div className="relative hidden md:block">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-red-900/50 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-gray-900/50 z-10" />
         <Image
           src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070&auto=format&fit=crop"
           alt="Luxury retreat"
@@ -90,12 +90,12 @@ export default function LoginPage() {
         <div className="w-full max-w-md">
           <div className="mb-8">
             <Link href="/" className="flex items-center gap-2 font-bold text-2xl mb-8">
-              <span className="text-red-600">Retreat</span> World Wide
+              <span className="text-black">Retreat</span> World Wide
             </Link>
             <h2 className="text-3xl font-bold">Sign in to your account</h2>
             <p className="text-muted-foreground mt-2">
               Or{" "}
-              <Link href="/signup" className="text-red-600 hover:underline">
+              <Link href="/signup" className="text-black hover:underline">
                 create a new account
               </Link>
             </p>
@@ -118,14 +118,14 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="h-12"
+                className="h-12 border-2 focus:border-black transition-colors"
               />
             </div>
 
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password">Password</Label>
-                <Link href="/forgot-password" className="text-sm text-red-600 hover:underline">
+                <Link href="/forgot-password" className="text-sm text-black hover:underline">
                   Forgot your password?
                 </Link>
               </div>
@@ -136,7 +136,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="h-12"
+                className="h-12 border-2 focus:border-black transition-colors"
               />
             </div>
 
@@ -150,7 +150,7 @@ export default function LoginPage() {
               </label>
             </div>
 
-            <Button type="submit" className="w-full h-12 text-base bg-red-600 hover:bg-red-700" disabled={loading}>
+            <Button type="submit" className="w-full h-12 text-base bg-black hover:bg-gray-800 text-white" disabled={loading}>
               {loading ? "Signing in..." : "Sign in"}
             </Button>
           </form>
@@ -186,11 +186,11 @@ export default function LoginPage() {
 
           <div className="mt-8 text-center text-sm text-muted-foreground">
             By signing in, you agree to our{" "}
-            <Link href="/terms" className="text-red-600 hover:underline">
+            <Link href="/terms" className="text-black hover:underline">
               Terms of Service
             </Link>{" "}
             and{" "}
-            <Link href="/privacy" className="text-red-600 hover:underline">
+            <Link href="/privacy" className="text-black hover:underline">
               Privacy Policy
             </Link>
             .

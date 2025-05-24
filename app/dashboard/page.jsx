@@ -124,264 +124,64 @@ export default function DashboardPage() {
               </Card>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <Card className="lg:col-span-2 hover:shadow-md transition-shadow">
-                <CardHeader className="flex flex-row items-center justify-between">
-                  <div>
-                    <CardTitle>Calendar Sync</CardTitle>
-                    <CardDescription>Sync your property availability with external calendars</CardDescription>
+            <Card className="hover:shadow-md transition-shadow">
+              <CardHeader className="flex flex-row items-center justify-between">
+                <div>
+                  <CardTitle>Calendar Sync</CardTitle>
+                  <CardDescription>Sync your property availability with external calendars</CardDescription>
+                </div>
+                <Button variant="outline" className="gap-2">
+                  <Sync className="h-4 w-4" />
+                  Sync Now
+                </Button>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between p-3 border rounded-md">
+                    <div className="flex items-center gap-3">
+                      <div className="h-10 w-10 rounded-md bg-blue-100 flex items-center justify-center">
+                        <Calendar className="h-5 w-5 text-blue-600" />
+                      </div>
+                      <div>
+                        <p className="font-medium">Google Calendar</p>
+                        <p className="text-sm text-muted-foreground">Last synced: 2 hours ago</p>
+                      </div>
+                    </div>
+                    <Badge variant="outline" className="bg-green-50 text-green-700 hover:bg-green-100">
+                      Connected
+                    </Badge>
                   </div>
-                  <Button variant="outline" className="gap-2">
-                    <Sync className="h-4 w-4" />
-                    Sync Now
-                  </Button>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between p-3 border rounded-md">
-                      <div className="flex items-center gap-3">
-                        <div className="h-10 w-10 rounded-md bg-blue-100 flex items-center justify-center">
-                          <Calendar className="h-5 w-5 text-blue-600" />
-                        </div>
-                        <div>
-                          <p className="font-medium">Google Calendar</p>
-                          <p className="text-sm text-muted-foreground">Last synced: 2 hours ago</p>
-                        </div>
+                  <div className="flex items-center justify-between p-3 border rounded-md">
+                    <div className="flex items-center gap-3">
+                      <div className="h-10 w-10 rounded-md bg-red-100 flex items-center justify-center">
+                        <Calendar className="h-5 w-5 text-red-600" />
                       </div>
-                      <Badge variant="outline" className="bg-green-50 text-green-700 hover:bg-green-100">
-                        Connected
-                      </Badge>
-                    </div>
-                    <div className="flex items-center justify-between p-3 border rounded-md">
-                      <div className="flex items-center gap-3">
-                        <div className="h-10 w-10 rounded-md bg-red-100 flex items-center justify-center">
-                          <Calendar className="h-5 w-5 text-red-600" />
-                        </div>
-                        <div>
-                          <p className="font-medium">Lodigfy Calender</p>
-                          <p className="text-sm text-muted-foreground">Last synced: 1 day ago</p>
-                        </div>
+                      <div>
+                        <p className="font-medium">Lodigfy Calender</p>
+                        <p className="text-sm text-muted-foreground">Last synced: 1 day ago</p>
                       </div>
-                      <Badge variant="outline" className="bg-green-50 text-green-700 hover:bg-green-100">
-                        Connected
-                      </Badge>
                     </div>
-                    <div className="flex items-center justify-between p-3 border rounded-md">
-                      <div className="flex items-center gap-3">
-                        <div className="h-10 w-10 rounded-md bg-purple-100 flex items-center justify-center">
-                          <Calendar className="h-5 w-5 text-purple-600" />
-                        </div>
-                        <div>
-                          <p className="font-medium">VRBO Calendar</p>
-                          <p className="text-sm text-muted-foreground">Not connected</p>
-                        </div>
-                      </div>
-                      <Button size="sm">Connect</Button>
-                    </div>
+                    <Badge variant="outline" className="bg-green-50 text-green-700 hover:bg-green-100">
+                      Connected
+                    </Badge>
                   </div>
-                </CardContent>
-              </Card>
+                  <div className="flex items-center justify-between p-3 border rounded-md">
+                    <div className="flex items-center gap-3">
+                      <div className="h-10 w-10 rounded-md bg-purple-100 flex items-center justify-center">
+                        <Calendar className="h-5 w-5 text-purple-600" />
+                      </div>
+                      <div>
+                        <p className="font-medium">VRBO Calendar</p>
+                        <p className="text-sm text-muted-foreground">Not connected</p>
+                      </div>
+                    </div>
+                    <Button size="sm">Connect</Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
 
-              <Card className="hover:shadow-md transition-shadow">
-                <CardHeader>
-                  <CardTitle>Activity Sync</CardTitle>
-                  <CardDescription>Sync activities with instructors and vendors</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between p-3 border rounded-md">
-                      <div className="flex items-center gap-3">
-                        <Avatar className="h-9 w-9">
-                          <AvatarImage src="/placeholder.svg?height=36&width=36" />
-                          <AvatarFallback>JD</AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <p className="font-medium">John Instructor</p>
-                            <UserRoleBadge role="instructor" className="h-5" />
-                          </div>
-                          <p className="text-sm text-muted-foreground">Yoga Workshop</p>
-                        </div>
-                      </div>
-                      <Button size="sm" variant="outline">
-                        Sync
-                      </Button>
-                    </div>
-                    <div className="flex items-center justify-between p-3 border rounded-md">
-                      <div className="flex items-center gap-3">
-                        <Avatar className="h-9 w-9">
-                          <AvatarImage src="/placeholder.svg?height=36&width=36" />
-                          <AvatarFallback>MV</AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <p className="font-medium">Mike Vendor</p>
-                            <UserRoleBadge role="vendor" className="h-5" />
-                          </div>
-                          <p className="text-sm text-muted-foreground">Catering Services</p>
-                        </div>
-                      </div>
-                      <Button size="sm" variant="outline">
-                        Sync
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-                <CardFooter>
-                  <Button variant="outline" className="w-full">
-                    View All Activities
-                  </Button>
-                </CardFooter>
-              </Card>
-            </div>
 
-            <Tabs defaultValue="active-bookings">
-              <TabsList>
-                <TabsTrigger value="active-bookings">Active Bookings</TabsTrigger>
-                <TabsTrigger value="pending-bookings">Pending Bookings</TabsTrigger>
-                <TabsTrigger value="closed-bookings">Closed Bookings</TabsTrigger>
-              </TabsList>
-              <TabsContent value="active-bookings">
-                <Card className="hover:shadow-md transition-shadow">
-                  <CardHeader>
-                    <CardTitle>Active Bookings</CardTitle>
-                    <CardDescription>Currently active bookings for your properties</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-8">
-                      {[1, 2, 3, 4].map((booking) => (
-                        <div
-                          key={booking}
-                          className="flex items-center hover:bg-muted p-2 rounded-md transition-colors"
-                        >
-                          <Avatar className="h-9 w-9">
-                            <AvatarImage src="/placeholder.svg?height=36&width=36" />
-                            <AvatarFallback>JD</AvatarFallback>
-                          </Avatar>
-                          <div className="ml-4 space-y-1">
-                            <p className="text-sm font-medium leading-none">Sarah Johnson</p>
-                            <p className="text-sm text-muted-foreground">Oceanfront Villa Retreat</p>
-                          </div>
-                          <div className="ml-auto font-medium">
-                            <Badge>May 20 - May 27</Badge>
-                          </div>
-                          <div className="ml-4 font-medium">$2,093</div>
-                          <div className="flex gap-2 ml-4">
-                            <Button variant="outline" size="icon" className="h-8 w-8">
-                              <MessageSquare className="h-4 w-4" />
-                            </Button>
-                            <Button variant="outline" size="icon" className="h-8 w-8">
-                              <ArrowUpRight className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                  <CardFooter>
-                    <Button variant="outline" asChild className="w-full hover:bg-muted">
-                      <Link href="/dashboard/active-bookings">
-                        View All Active Bookings
-                        <ChevronRight className="ml-2 h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </CardFooter>
-                </Card>
-              </TabsContent>
-              <TabsContent value="pending-bookings">
-                <Card className="hover:shadow-md transition-shadow">
-                  <CardHeader>
-                    <CardTitle>Pending Bookings</CardTitle>
-                    <CardDescription>Bookings awaiting confirmation</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-8">
-                      {[1, 2].map((booking) => (
-                        <div
-                          key={booking}
-                          className="flex items-center hover:bg-muted p-2 rounded-md transition-colors"
-                        >
-                          <Avatar className="h-9 w-9">
-                            <AvatarImage src="/placeholder.svg?height=36&width=36" />
-                            <AvatarFallback>JD</AvatarFallback>
-                          </Avatar>
-                          <div className="ml-4 space-y-1">
-                            <p className="text-sm font-medium leading-none">Michael Brown</p>
-                            <p className="text-sm text-muted-foreground">Mountain View Cabin</p>
-                          </div>
-                          <div className="ml-auto font-medium">
-                            <Badge variant="outline">June 10 - June 17</Badge>
-                          </div>
-                          <div className="ml-4 font-medium">$1,850</div>
-                          <div className="flex gap-2 ml-4">
-                            <Button size="sm" variant="outline" className="h-8">
-                              Decline
-                            </Button>
-                            <Button size="sm" className="h-8">
-                              Approve
-                            </Button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                  <CardFooter>
-                    <Button variant="outline" asChild className="w-full hover:bg-muted">
-                      <Link href="/dashboard/pending-bookings">
-                        View All Pending Bookings
-                        <ChevronRight className="ml-2 h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </CardFooter>
-                </Card>
-              </TabsContent>
-              <TabsContent value="closed-bookings">
-                <Card className="hover:shadow-md transition-shadow">
-                  <CardHeader>
-                    <CardTitle>Closed Bookings</CardTitle>
-                    <CardDescription>Past bookings for your properties</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-8">
-                      {[1, 2, 3].map((booking) => (
-                        <div
-                          key={booking}
-                          className="flex items-center hover:bg-muted p-2 rounded-md transition-colors"
-                        >
-                          <Avatar className="h-9 w-9">
-                            <AvatarImage src="/placeholder.svg?height=36&width=36" />
-                            <AvatarFallback>JD</AvatarFallback>
-                          </Avatar>
-                          <div className="ml-4 space-y-1">
-                            <p className="text-sm font-medium leading-none">Emily Wilson</p>
-                            <p className="text-sm text-muted-foreground">Beachfront Bungalow</p>
-                          </div>
-                          <div className="ml-auto font-medium">
-                            <Badge variant="outline">April 5 - April 12</Badge>
-                          </div>
-                          <div className="ml-4 font-medium">$1,750</div>
-                          <div className="flex items-center ml-4 gap-1">
-                            <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                            <span>4.9</span>
-                          </div>
-                          <Button variant="ghost" size="icon" className="ml-2 hover:bg-muted">
-                            <ArrowUpRight className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                  <CardFooter>
-                    <Button variant="outline" asChild className="w-full hover:bg-muted">
-                      <Link href="/dashboard/closed-bookings">
-                        View All Closed Bookings
-                        <ChevronRight className="ml-2 h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </CardFooter>
-                </Card>
-              </TabsContent>
-            </Tabs>
           </>
         )
 

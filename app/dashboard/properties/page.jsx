@@ -14,6 +14,18 @@ import {
 import { Button } from "@/components/ui/button";
 import { Home, Edit, Trash, Eye, MapPin, List, Map as MapIcon, Plus } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Switch } from "@/components/ui/switch";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import PropertyMap from "@/components/property-map";
 
@@ -109,9 +121,19 @@ export default function PropertiesPage() {
   };
 
   const handleDeleteProperty = (id) => {
-    // In a real app, this would show a confirmation dialog
     setProperties(properties.filter(property => property.id !== id));
     toast.success("Property deleted successfully");
+  };
+
+  const handleToggleStatus = (id) => {
+    setProperties(properties.map(property =>
+      property.id === id
+        ? { ...property, status: property.status === "active" ? "inactive" : "active" }
+        : property
+    ));
+    const property = properties.find(p => p.id === id);
+    const newStatus = property.status === "active" ? "inactive" : "active";
+    toast.success(`Property ${newStatus === "active" ? "activated" : "deactivated"} successfully`);
   };
 
   const handleViewProperty = (id) => {
@@ -162,9 +184,18 @@ export default function PropertiesPage() {
               <CardHeader className="pb-2">
                 <div className="flex justify-between items-start">
                   <CardTitle className="text-lg">{property.name}</CardTitle>
-                  <Badge variant={property.status === "active" ? "success" : "secondary"}>
-                    {property.status === "active" ? "Active" : "Inactive"}
-                  </Badge>
+                  <div className="flex items-center gap-2">
+                    <Badge variant={property.status === "active" ? "success" : "secondary"}>
+                      {property.status === "active" ? "Active" : "Inactive"}
+                    </Badge>
+                    <div className="flex items-center gap-2">
+                      <Switch
+                        checked={property.status === "active"}
+                        onCheckedChange={() => handleToggleStatus(property.id)}
+                        className="data-[state=checked]:bg-green-600"
+                      />
+                    </div>
+                  </div>
                 </div>
                 <CardDescription className="flex items-center">
                   <MapPin className="h-3 w-3 mr-1" />
@@ -198,10 +229,32 @@ export default function PropertiesPage() {
                     <Edit className="mr-1 h-4 w-4" />
                     Edit
                   </Button>
-                  <Button variant="destructive" size="sm" onClick={() => handleDeleteProperty(property.id)}>
-                    <Trash className="mr-1 h-4 w-4" />
-                    Delete
-                  </Button>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button variant="destructive" size="sm">
+                        <Trash className="mr-1 h-4 w-4" />
+                        Delete
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Are you sure you want to delete this property?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          This action cannot be undone. This will permanently delete "{property.name}"
+                          and remove all associated data from our servers.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => handleDeleteProperty(property.id)}
+                          className="bg-black hover:bg-gray-800 text-white"
+                        >
+                          Delete Property
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </div>
               </CardFooter>
             </Card>

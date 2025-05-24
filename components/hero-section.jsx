@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { ExactSearchBar } from "@/components/exact-search-bar"
+import DynamicSearchBar from "@/components/dynamic-search-bar"
 
 export default function HeroSection() {
   return (
@@ -25,7 +25,7 @@ export default function HeroSection() {
         </div>
       </div>
       <div className="absolute bottom-12 left-0 right-0 z-30 px-4">
-        <ExactSearchBar />
+        <DynamicSearchBar />
       </div>
     </section>
   )
