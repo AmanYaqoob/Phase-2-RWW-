@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Bar Design Comparison</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #111;
+        }
+        .comparison {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            margin-top: 30px;
+        }
+        .search-bar {
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            max-width: 800px;
+        }
+        .original {
+            background: white;
+            padding: 0;
+        }
+        .original .bar {
+            display: flex;
+            align-items: center;
+            border-radius: 8px;
+        }
+        .original .section {
+            flex: 1;
+            padding: 16px;
+            border-right: 1px solid #eee;
+        }
+        .original .section:last-of-type {
+            border-right: none;
+        }
+        .original .title {
+            font-weight: 600;
+            margin: 0;
+        }
+        .original .subtitle {
+            color: #666;
+            margin: 4px 0 0 0;
+            font-size: 14px;
+        }
+        .original .search-icon {
+            background: linear-gradient(to right, #e53e3e, #e53e3e);
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 8px;
+        }
+        
+        .modern {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 8px;
+        }
+        .modern .bar {
+            display: flex;
+            align-items: center;
+        }
+        .modern .section {
+            flex: 1;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            border-right: 1px solid #eee;
+        }
+        .modern .section:last-of-type {
+            border-right: none;
+        }
+        .modern .icon-container {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+        .modern .icon-container.red {
+            background-color: #fee2e2;
+        }
+        .modern .icon-container.blue {
+            background-color: #e1effe;
+        }
+        .modern .icon-container.green {
+            background-color: #dcfce7;
+        }
+        .modern .icon {
+            font-size: 20px;
+        }
+        .modern .content {
+            flex: 1;
+        }
+        .modern .title {
+            font-weight: 600;
+            margin: 0;
+            color: #333;
+        }
+        .modern .subtitle {
+            color: #666;
+            margin: 4px 0 0 0;
+            font-size: 14px;
+        }
+        .modern .search-icon {
+            background: linear-gradient(to right, #e53e3e, #9333ea);
+            color: white;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .label {
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .features {
+            margin-top: 20px;
+        }
+        .features h3 {
+            margin-bottom: 10px;
+        }
+        .features ul {
+            padding-left: 20px;
+        }
+        .features li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Search Bar Design Comparison</h1>
+    
+    <div class="comparison">
+        <div>
+            <div class="label">Original Search Bar Design</div>
+            <div class="search-bar original">
+                <div class="bar">
+                    <div class="section">
+                        <div style="display: flex; align-items: center;">
+                            <span style="margin-right: 8px; color: #e53e3e;">🔍</span>
+                            <div>
+                                <p class="title">Where to?</p>
+                                <p class="subtitle">Search destinations</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <p class="title">When</p>
+                        <p class="subtitle">Add dates</p>
+                    </div>
+                    <div class="section">
+                        <p class="title">Who</p>
+                        <p class="subtitle">Add guests</p>
+                    </div>
+                    <div class="search-icon">🔍</div>
+                </div>
+            </div>
+            
+            <div class="features">
+                <h3>Features:</h3>
+                <ul>
+                    <li>Rectangular design with sharp corners</li>
+                    <li>Simple icon placement</li>
+                    <li>Standard button design</li>
+                    <li>Basic visual hierarchy</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div>
+            <div class="label">New Modern Search Bar Design</div>
+            <div class="search-bar modern">
+                <div class="bar">
+                    <div class="section">
+                        <div class="icon-container red">
+                            <span class="icon">🔍</span>
+                        </div>
+                        <div class="content">
+                            <p class="title">Where to?</p>
+                            <p class="subtitle">Search destinations</p>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="icon-container blue">
+                            <span class="icon">📅</span>
+                        </div>
+                        <div class="content">
+                            <p class="title">When</p>
+                            <p class="subtitle">Add dates</p>
+                        </div>
+                    </div>
+                    <div class="section">
+                        <div class="icon-container green">
+                            <span class="icon">👥</span>
+                        </div>
+                        <div class="content">
+                            <p class="title">Who</p>
+                            <p class="subtitle">Add guests</p>
+                        </div>
+                    </div>
+                    <div class="search-icon">🔍</div>
+                </div>
+            </div>
+            
+            <div class="features">
+                <h3>Features:</h3>
+                <ul>
+                    <li>Rounded pill design with backdrop blur effect</li>
+                    <li>Colored icon backgrounds for better visual hierarchy</li>
+                    <li>Icons in tab navigation for improved usability</li>
+                    <li>Gradient button styling (red to purple)</li>
+                    <li>Enhanced spacing and padding</li>
+                    <li>Improved visual feedback for interactions</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div style="margin-top: 40px;">
+        <h2>Key Differences</h2>
+        <ol>
+            <li>
+                <strong>Shape and Style:</strong>
+                <ul>
+                    <li>Original: Rectangular with sharp corners</li>
+                    <li>New: Rounded pill shape with modern backdrop blur</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Visual Hierarchy:</strong>
+                <ul>
+                    <li>Original: Basic flat design</li>
+                    <li>New: Colored icon backgrounds and improved spacing</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Icon Integration:</strong>
+                <ul>
+                    <li>Original: Basic icon placement</li>
+                    <li>New: Icons with colored backgrounds and integrated into tab navigation</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Button Design:</strong>
+                <ul>
+                    <li>Original: Simple gradient button</li>
+                    <li>New: Enhanced gradient button (red to purple) with shadow</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Guest Selection UI:</strong>
+                <ul>
+                    <li>Original: Basic counter interface</li>
+                    <li>New: Enhanced counters with better visual feedback and background colors</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Expanded View:</strong>
+                <ul>
+                    <li>Original: Standard card with tabs</li>
+                    <li>New: Modern card with rounded corners, icons in tabs, and improved layout</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+</body>
+</html>
