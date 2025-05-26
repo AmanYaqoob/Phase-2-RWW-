@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import { Menu, Bell, User, LogOut, Settings, UserCircle } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import { Menu, Bell, User, LogOut, UserCircle } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
@@ -42,16 +42,10 @@ const mockNotifications = [
 ];
 
 export default function Header() {
-  const pathname = usePathname();
   const router = useRouter();
   const [notifications, setNotifications] = useState(mockNotifications);
 
-  // Function to get the current page title based on pathname
-  const getPageTitle = () => {
-    const path = pathname.split("/").pop();
-    if (path === "dashboard") return "Dashboard";
-    return path.charAt(0).toUpperCase() + path.slice(1);
-  };
+
 
   const handleProfileClick = () => {
     router.push("/dashboard/profile");
@@ -88,8 +82,8 @@ export default function Header() {
           </SheetContent>
         </Sheet>
         <div className="ml-2 md:ml-0 font-semibold text-lg">
-          {getPageTitle()}
-                  </div>
+          Retreat World Wide
+        </div>
         <div className="ml-auto flex items-center space-x-4">
           <ThemeToggle />
 
