@@ -29,7 +29,7 @@ import {
 } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
-import { UserRoleBadge } from "@/components/user-role-badge"
+
 
 export function CreativeSidebar() {
   const pathname = usePathname()
@@ -432,7 +432,6 @@ export function CreativeSidebar() {
                   <p className="font-medium">{user?.name || "User"}</p>
                   <div className="flex items-center gap-2">
                     <p className="text-sm text-white/80">{getRoleTitle()}</p>
-                    {user?.role && <UserRoleBadge role={user.role} />}
                   </div>
                 </motion.div>
               )}

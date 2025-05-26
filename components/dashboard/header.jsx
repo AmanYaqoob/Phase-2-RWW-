@@ -166,7 +166,6 @@ export default function Header() {
                 </div>
                 <div>
                   <p className="font-medium text-sm">Alex Johnson</p>
-                  <p className="text-xs text-muted-foreground">Property Owner</p>
                 </div>
               </div>
               <DropdownMenuSeparator />

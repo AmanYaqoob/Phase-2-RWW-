@@ -23,7 +23,7 @@ import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { RevenueChart } from "@/components/dashboard/charts/revenue-chart"
 import { BookingsChart } from "@/components/dashboard/charts/bookings-chart"
-import { UserRoleBadge } from "@/components/user-role-badge"
+
 
 export default function DashboardPage() {
   const [user, setUser] = useState(null)
@@ -527,7 +527,6 @@ export default function DashboardPage() {
                         <div>
                           <div className="flex items-center gap-2">
                             <p className="font-medium">Sarah Property</p>
-                            <UserRoleBadge role="property-owner" className="h-5" />
                           </div>
                           <p className="text-sm text-muted-foreground">Oceanfront Villa Retreat</p>
                         </div>
@@ -550,7 +549,6 @@ export default function DashboardPage() {
                         <div>
                           <div className="flex items-center gap-2">
                             <p className="font-medium">James Property</p>
-                            <UserRoleBadge role="property-owner" className="h-5" />
                           </div>
                           <p className="text-sm text-muted-foreground">Mountain Retreat Center</p>
                         </div>
@@ -726,7 +724,6 @@ export default function DashboardPage() {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-            {user?.role && <UserRoleBadge role={user.role} />}
           </div>
           <p className="text-muted-foreground">Welcome back, {user?.name || "User"}</p>
         </div>

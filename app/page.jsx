@@ -4,7 +4,6 @@ import { useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { FadeIn, FadeInStagger, FadeInStaggerItem } from "@/components/animations/fade-in"
 import HeroSection from "@/components/hero-section"
 import FeaturedRetreats from "@/components/featured-retreats"
 import { SiteHeader } from "@/components/site-header"
@@ -33,16 +32,16 @@ export default function Home() {
         {/* How It Works Section */}
         <section className="py-20 px-4 md:px-6 bg-muted">
           <div className="container mx-auto">
-            <FadeIn>
+            <div>
               <div className="text-center space-y-4 mb-12">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">How It Works</h2>
                 <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
                   Find and book the perfect retreat space in just a few simple steps
                 </p>
               </div>
-            </FadeIn>
+            </div>
 
-            <FadeInStagger>
+            <div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {[
                   {
@@ -67,7 +66,7 @@ export default function Home() {
                     step: "03",
                   },
                 ].map((step, index) => (
-                  <FadeInStaggerItem key={index}>
+                  <div key={index}>
                     <div className="relative group">
                       <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-primary/50 rounded-lg blur opacity-30 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
                       <div className="relative bg-card rounded-lg p-6 h-full flex flex-col">
@@ -86,17 +85,17 @@ export default function Home() {
                         <p className="text-muted-foreground">{step.description}</p>
                       </div>
                     </div>
-                  </FadeInStaggerItem>
+                  </div>
                 ))}
               </div>
-            </FadeInStagger>
+            </div>
           </div>
         </section>
 
         {/* CTA Section */}
         <section className="py-20 px-4 md:px-6 bg-black text-white">
           <div className="container mx-auto">
-            <FadeIn>
+            <div>
               <div className="text-center space-y-4 mb-8">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
                   Ready to Host Your Retreat?
@@ -122,7 +121,7 @@ export default function Home() {
                   Learn More
                 </Button>
               </div>
-            </FadeIn>
+            </div>
           </div>
         </section>
       </main>
