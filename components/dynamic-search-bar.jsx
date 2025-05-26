@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Calendar as CalendarComponent } from "@/components/ui/calendar"
 import { cn } from "@/lib/utils"
-import { format, addDays } from "date-fns"
+import { format } from "date-fns"
 
 // Mock location suggestions
 const locationSuggestions = [
@@ -214,7 +214,7 @@ export default function DynamicSearchBar() {
                         ))}
                       </div>
                     )}
-                  </div>
+              </div>
 
               {/* Date Section */}
               <div className="relative">
@@ -252,8 +252,8 @@ export default function DynamicSearchBar() {
                           className="rounded-lg border-0"
                         />
                       </PopoverContent>
-                    </Popover>
-                  </div>
+                </Popover>
+              </div>
 
               {/* Guests Section */}
               <div className="relative">
@@ -369,10 +369,8 @@ export default function DynamicSearchBar() {
                           </div>
                         </div>
                       </PopoverContent>
-                    </Popover>
-                  </div>
-                </div>
-
+                </Popover>
+              </div>
             </div>
 
             {/* Search Button */}
