@@ -114,7 +114,6 @@ export default function DynamicSearchBar() {
 
   return (
     <div ref={searchBarRef} className="w-full max-w-4xl mx-auto relative z-50">
-      {/* Compact Search Bar */}
       {!isExpanded ? (
         <div
           className="bg-white rounded-lg shadow-lg border-2 border-gray-200 p-3 cursor-pointer hover:shadow-xl transition-all duration-300 hover:border-gray-300"
@@ -142,17 +141,13 @@ export default function DynamicSearchBar() {
           </div>
         </div>
       ) : (
-        /* Expanded Search Bar - Covers Half Hero Section */
         <div className="fixed inset-0 z-50">
-          {/* Background Overlay */}
           <div
             className="absolute inset-0 bg-black/50 backdrop-blur-sm"
             onClick={() => setIsExpanded(false)}
           />
 
-          {/* Expanded Search Container - Full Width, Half Height */}
-          <div className="absolute inset-x-0 top-0 h-1/2 bg-white shadow-2xl border-b-4 border-gray-200 flex flex-col animate-in slide-in-from-top duration-500">
-            {/* Header */}
+          <div className="absolute inset-x-0 top-0 h-1/2 bg-white shadow-2xl border-b-4 border-gray-200 flex flex-col transition-all duration-500">
             <div className="p-8 border-b-2 border-gray-100 bg-gradient-to-r from-gray-50 to-white">
               <div className="max-w-6xl mx-auto flex items-center justify-between">
                 <div>
@@ -170,224 +165,219 @@ export default function DynamicSearchBar() {
               </div>
             </div>
 
-            {/* Search Sections */}
             <div className="flex-1 p-6 overflow-y-auto">
               <div className="max-w-6xl mx-auto">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-                {/* Location Section */}
-                <div className="relative">
-                  <div
-                    className={cn(
-                      "border-2 rounded-lg p-4 cursor-pointer transition-all duration-200 min-h-[100px] flex flex-col justify-center bg-white shadow-sm hover:shadow-md",
-                      activeSection === "location"
-                        ? "border-black bg-gray-50 shadow-lg"
-                        : "border-gray-200 hover:border-gray-300"
-                    )}
-                    onClick={() => {
-                      setActiveSection("location")
-                      setShowLocationSuggestions(true)
-                    }}
-                  >
-                    <div className="flex items-center mb-4">
-                      <div className="bg-gray-100 rounded-lg p-3 mr-4">
-                        <MapPin className="h-6 w-6 text-gray-600" />
-                      </div>
-                      <span className="font-bold text-gray-900 text-xl">Where</span>
-                    </div>
-                    <Input
-                      placeholder="Search destinations"
-                      value={location}
-                      onChange={(e) => setLocation(e.target.value)}
-                      className="border-0 p-0 text-lg placeholder:text-gray-400 focus-visible:ring-0 font-medium"
-                      onFocus={() => {
+                  <div className="relative">
+                    <div
+                      className={cn(
+                        "border-2 rounded-lg p-4 cursor-pointer transition-all duration-200 min-h-[100px] flex flex-col justify-center bg-white shadow-sm hover:shadow-md",
+                        activeSection === "location"
+                          ? "border-black bg-gray-50 shadow-lg"
+                          : "border-gray-200 hover:border-gray-300"
+                      )}
+                      onClick={() => {
                         setActiveSection("location")
                         setShowLocationSuggestions(true)
                       }}
-                    />
-                  </div>
-
-                {/* Location Suggestions */}
-                {showLocationSuggestions && activeSection === "location" && (
-                  <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-xl border-2 border-gray-200 z-50 max-h-64 overflow-y-auto">
-                    {filteredLocations.map((loc) => (
-                      <div
-                        key={loc.id}
-                        className="p-4 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0 transition-colors duration-150"
-                        onClick={() => handleLocationSelect(loc)}
-                      >
-                        <div className="flex items-center">
-                          <div className="bg-gray-100 rounded-lg p-2 mr-3">
-                            <MapPin className="h-4 w-4 text-gray-600" />
-                          </div>
-                          <div>
-                            <div className="font-semibold text-gray-900">{loc.name}</div>
-                            <div className="text-sm text-gray-500">{loc.type}</div>
-                          </div>
+                    >
+                      <div className="flex items-center mb-4">
+                        <div className="bg-gray-100 rounded-lg p-3 mr-4">
+                          <MapPin className="h-6 w-6 text-gray-600" />
                         </div>
+                        <span className="font-bold text-gray-900 text-xl">Where</span>
                       </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-                {/* Date Section */}
-                <div className="relative">
-                  <Popover open={showCalendar} onOpenChange={setShowCalendar}>
-                    <PopoverTrigger asChild>
-                      <div
-                        className={cn(
-                          "border-2 rounded-lg p-4 cursor-pointer transition-all duration-200 min-h-[100px] flex flex-col justify-center bg-white shadow-sm hover:shadow-md",
-                          activeSection === "dates"
-                            ? "border-black bg-gray-50 shadow-lg"
-                            : "border-gray-200 hover:border-gray-300"
-                        )}
-                        onClick={() => {
-                          setActiveSection("dates")
-                          setShowCalendar(true)
+                      <Input
+                        placeholder="Search destinations"
+                        value={location}
+                        onChange={(e) => setLocation(e.target.value)}
+                        className="border-0 p-0 text-lg placeholder:text-gray-400 focus-visible:ring-0 font-medium"
+                        onFocus={() => {
+                          setActiveSection("location")
+                          setShowLocationSuggestions(true)
                         }}
-                      >
-                        <div className="flex items-center mb-4">
-                          <div className="bg-gray-100 rounded-lg p-3 mr-4">
-                            <Calendar className="h-6 w-6 text-gray-600" />
-                          </div>
-                          <span className="font-bold text-gray-900 text-xl">When</span>
-                        </div>
-                        <div className="text-lg text-gray-600 font-medium">
-                          {getDateRangeText()}
-                        </div>
-                      </div>
-                    </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <CalendarComponent
-                      mode="range"
-                      selected={dateRange}
-                      onSelect={handleDateSelect}
-                      numberOfMonths={2}
-                      className="rounded-lg border-0"
-                    />
-                  </PopoverContent>
-                </Popover>
-              </div>
-
-                {/* Guests Section */}
-                <div className="relative">
-                  <Popover open={showGuestSelector} onOpenChange={setShowGuestSelector}>
-                    <PopoverTrigger asChild>
-                      <div
-                        className={cn(
-                          "border-2 rounded-lg p-4 cursor-pointer transition-all duration-200 min-h-[100px] flex flex-col justify-center bg-white shadow-sm hover:shadow-md",
-                          activeSection === "guests"
-                            ? "border-black bg-gray-50 shadow-lg"
-                            : "border-gray-200 hover:border-gray-300"
-                        )}
-                        onClick={() => {
-                          setActiveSection("guests")
-                          setShowGuestSelector(true)
-                        }}
-                      >
-                        <div className="flex items-center mb-4">
-                          <div className="bg-gray-100 rounded-lg p-3 mr-4">
-                            <Users className="h-6 w-6 text-gray-600" />
-                          </div>
-                          <span className="font-bold text-gray-900 text-xl">Who</span>
-                        </div>
-                        <div className="text-lg text-gray-600 font-medium">
-                          {getGuestText()}
-                        </div>
-                      </div>
-                    </PopoverTrigger>
-                  <PopoverContent className="w-80 p-6" align="start">
-                    <div className="space-y-6">
-                      {/* Adults */}
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <div className="font-semibold text-gray-900">Adults</div>
-                          <div className="text-sm text-gray-500">Ages 13 or above</div>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="rounded-lg h-10 w-10 p-0 border-2"
-                            onClick={() => updateGuestCount("adults", "decrement")}
-                            disabled={guests.adults <= 1}
-                          >
-                            <Minus className="h-4 w-4" />
-                          </Button>
-                          <span className="w-8 text-center font-semibold text-lg">{guests.adults}</span>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="rounded-lg h-10 w-10 p-0 border-2"
-                            onClick={() => updateGuestCount("adults", "increment")}
-                          >
-                            <Plus className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </div>
-
-                      {/* Children */}
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <div className="font-semibold text-gray-900">Children</div>
-                          <div className="text-sm text-gray-500">Ages 2-12</div>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="rounded-lg h-10 w-10 p-0 border-2"
-                            onClick={() => updateGuestCount("children", "decrement")}
-                            disabled={guests.children <= 0}
-                          >
-                            <Minus className="h-4 w-4" />
-                          </Button>
-                          <span className="w-8 text-center font-semibold text-lg">{guests.children}</span>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="rounded-lg h-10 w-10 p-0 border-2"
-                            onClick={() => updateGuestCount("children", "increment")}
-                          >
-                            <Plus className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </div>
-
-                      {/* Pets */}
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <div className="font-semibold text-gray-900">Pets</div>
-                          <div className="text-sm text-gray-500">Bringing a service animal?</div>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="rounded-lg h-10 w-10 p-0 border-2"
-                            onClick={() => updateGuestCount("pets", "decrement")}
-                            disabled={guests.pets <= 0}
-                          >
-                            <Minus className="h-4 w-4" />
-                          </Button>
-                          <span className="w-8 text-center font-semibold text-lg">{guests.pets}</span>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="rounded-lg h-10 w-10 p-0 border-2"
-                            onClick={() => updateGuestCount("pets", "increment")}
-                          >
-                            <Plus className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </div>
+                      />
                     </div>
-                  </PopoverContent>
-                </Popover>
-              </div>
-            </div>
 
+                    {showLocationSuggestions && activeSection === "location" && (
+                      <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-xl border-2 border-gray-200 z-50 max-h-64 overflow-y-auto">
+                        {filteredLocations.map((loc) => (
+                          <div
+                            key={loc.id}
+                            className="p-4 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0 transition-colors duration-150"
+                            onClick={() => handleLocationSelect(loc)}
+                          >
+                            <div className="flex items-center">
+                              <div className="bg-gray-100 rounded-lg p-2 mr-3">
+                                <MapPin className="h-4 w-4 text-gray-600" />
+                              </div>
+                              <div>
+                                <div className="font-semibold text-gray-900">{loc.name}</div>
+                                <div className="text-sm text-gray-500">{loc.type}</div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Date Section */}
+                  <div className="relative">
+                    <Popover open={showCalendar} onOpenChange={setShowCalendar}>
+                      <PopoverTrigger asChild>
+                        <div
+                          className={cn(
+                            "border-2 rounded-lg p-4 cursor-pointer transition-all duration-200 min-h-[100px] flex flex-col justify-center bg-white shadow-sm hover:shadow-md",
+                            activeSection === "dates"
+                              ? "border-black bg-gray-50 shadow-lg"
+                              : "border-gray-200 hover:border-gray-300"
+                          )}
+                          onClick={() => {
+                            setActiveSection("dates")
+                            setShowCalendar(true)
+                          }}
+                        >
+                          <div className="flex items-center mb-4">
+                            <div className="bg-gray-100 rounded-lg p-3 mr-4">
+                              <Calendar className="h-6 w-6 text-gray-600" />
+                            </div>
+                            <span className="font-bold text-gray-900 text-xl">When</span>
+                          </div>
+                          <div className="text-lg text-gray-600 font-medium">
+                            {getDateRangeText()}
+                          </div>
+                        </div>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <CalendarComponent
+                          mode="range"
+                          selected={dateRange}
+                          onSelect={handleDateSelect}
+                          numberOfMonths={2}
+                          className="rounded-lg border-0"
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+
+                  {/* Guests Section */}
+                  <div className="relative">
+                    <Popover open={showGuestSelector} onOpenChange={setShowGuestSelector}>
+                      <PopoverTrigger asChild>
+                        <div
+                          className={cn(
+                            "border-2 rounded-lg p-4 cursor-pointer transition-all duration-200 min-h-[100px] flex flex-col justify-center bg-white shadow-sm hover:shadow-md",
+                            activeSection === "guests"
+                              ? "border-black bg-gray-50 shadow-lg"
+                              : "border-gray-200 hover:border-gray-300"
+                          )}
+                          onClick={() => {
+                            setActiveSection("guests")
+                            setShowGuestSelector(true)
+                          }}
+                        >
+                          <div className="flex items-center mb-4">
+                            <div className="bg-gray-100 rounded-lg p-3 mr-4">
+                              <Users className="h-6 w-6 text-gray-600" />
+                            </div>
+                            <span className="font-bold text-gray-900 text-xl">Who</span>
+                          </div>
+                          <div className="text-lg text-gray-600 font-medium">
+                            {getGuestText()}
+                          </div>
+                        </div>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-80 p-6" align="start">
+                        <div className="space-y-6">
+                          {/* Adults */}
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="font-semibold text-gray-900">Adults</div>
+                              <div className="text-sm text-gray-500">Ages 13 or above</div>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="rounded-lg h-10 w-10 p-0 border-2"
+                                onClick={() => updateGuestCount("adults", "decrement")}
+                                disabled={guests.adults <= 1}
+                              >
+                                <Minus className="h-4 w-4" />
+                              </Button>
+                              <span className="w-8 text-center font-semibold text-lg">{guests.adults}</span>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="rounded-lg h-10 w-10 p-0 border-2"
+                                onClick={() => updateGuestCount("adults", "increment")}
+                              >
+                                <Plus className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </div>
+
+                          {/* Children */}
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="font-semibold text-gray-900">Children</div>
+                              <div className="text-sm text-gray-500">Ages 2-12</div>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="rounded-lg h-10 w-10 p-0 border-2"
+                                onClick={() => updateGuestCount("children", "decrement")}
+                                disabled={guests.children <= 0}
+                              >
+                                <Minus className="h-4 w-4" />
+                              </Button>
+                              <span className="w-8 text-center font-semibold text-lg">{guests.children}</span>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="rounded-lg h-10 w-10 p-0 border-2"
+                                onClick={() => updateGuestCount("children", "increment")}
+                              >
+                                <Plus className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </div>
+
+                          {/* Pets */}
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="font-semibold text-gray-900">Pets</div>
+                              <div className="text-sm text-gray-500">Bringing a service animal?</div>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="rounded-lg h-10 w-10 p-0 border-2"
+                                onClick={() => updateGuestCount("pets", "decrement")}
+                                disabled={guests.pets <= 0}
+                              >
+                                <Minus className="h-4 w-4" />
+                              </Button>
+                              <span className="w-8 text-center font-semibold text-lg">{guests.pets}</span>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="rounded-lg h-10 w-10 p-0 border-2"
+                                onClick={() => updateGuestCount("pets", "increment")}
+                              >
+                                <Plus className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      </PopoverContent>
+                    </Popover>
+                  </div>
                 </div>
 
                 {/* Search Button */}
