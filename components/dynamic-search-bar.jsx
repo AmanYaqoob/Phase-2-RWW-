@@ -141,64 +141,57 @@ export default function DynamicSearchBar() {
           </div>
         </div>
       ) : (
-        <div className="fixed inset-0 z-50">
-          <div
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-            onClick={() => setIsExpanded(false)}
-          />
-
-          <div className="absolute inset-x-0 top-0 h-1/2 bg-white shadow-2xl border-b-4 border-gray-200 flex flex-col transition-all duration-500">
-            <div className="p-8 border-b-2 border-gray-100 bg-gradient-to-r from-gray-50 to-white">
-              <div className="max-w-6xl mx-auto flex items-center justify-between">
-                <div>
-                  <h2 className="text-3xl font-bold text-gray-900 mb-2">Find Your Perfect Retreat</h2>
-                  <p className="text-gray-600 text-lg">Search thousands of unique properties worldwide</p>
-                </div>
-                <Button
-                  variant="ghost"
-                  size="lg"
-                  onClick={() => setIsExpanded(false)}
-                  className="rounded-lg hover:bg-gray-100 p-3"
-                >
-                  <X className="h-6 w-6" />
-                </Button>
-              </div>
+        <div className="bg-white rounded-lg shadow-2xl border-2 border-gray-200 overflow-hidden max-w-4xl mx-auto">
+          {/* Header */}
+          <div className="p-4 border-b-2 border-gray-100 bg-gradient-to-r from-gray-50 to-white">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-semibold text-gray-900">Search Retreats</h3>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsExpanded(false)}
+                className="rounded-lg hover:bg-gray-100"
+              >
+                <X className="h-5 w-5" />
+              </Button>
             </div>
+          </div>
 
-            <div className="flex-1 p-6 overflow-y-auto">
-              <div className="max-w-6xl mx-auto">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Search Sections */}
+          <div className="p-4">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
 
-                  <div className="relative">
-                    <div
-                      className={cn(
-                        "border-2 rounded-lg p-4 cursor-pointer transition-all duration-200 min-h-[100px] flex flex-col justify-center bg-white shadow-sm hover:shadow-md",
-                        activeSection === "location"
-                          ? "border-black bg-gray-50 shadow-lg"
-                          : "border-gray-200 hover:border-gray-300"
-                      )}
-                      onClick={() => {
-                        setActiveSection("location")
-                        setShowLocationSuggestions(true)
-                      }}
-                    >
-                      <div className="flex items-center mb-4">
-                        <div className="bg-gray-100 rounded-lg p-3 mr-4">
-                          <MapPin className="h-6 w-6 text-gray-600" />
-                        </div>
-                        <span className="font-bold text-gray-900 text-xl">Where</span>
-                      </div>
-                      <Input
-                        placeholder="Search destinations"
-                        value={location}
-                        onChange={(e) => setLocation(e.target.value)}
-                        className="border-0 p-0 text-lg placeholder:text-gray-400 focus-visible:ring-0 font-medium"
-                        onFocus={() => {
-                          setActiveSection("location")
-                          setShowLocationSuggestions(true)
-                        }}
-                      />
+              {/* Location Section */}
+              <div className="relative">
+                <div
+                  className={cn(
+                    "border-2 rounded-lg p-3 cursor-pointer transition-all duration-200 min-h-[80px] flex flex-col justify-center bg-white shadow-sm hover:shadow-md",
+                    activeSection === "location"
+                      ? "border-black bg-gray-50 shadow-lg"
+                      : "border-gray-200 hover:border-gray-300"
+                  )}
+                  onClick={() => {
+                    setActiveSection("location")
+                    setShowLocationSuggestions(true)
+                  }}
+                >
+                  <div className="flex items-center mb-2">
+                    <div className="bg-gray-100 rounded-lg p-2 mr-3">
+                      <MapPin className="h-4 w-4 text-gray-600" />
                     </div>
+                    <span className="font-semibold text-gray-900 text-base">Where</span>
+                  </div>
+                  <Input
+                    placeholder="Search destinations"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    className="border-0 p-0 text-sm placeholder:text-gray-400 focus-visible:ring-0 font-medium"
+                    onFocus={() => {
+                      setActiveSection("location")
+                      setShowLocationSuggestions(true)
+                    }}
+                  />
+                </div>
 
                     {showLocationSuggestions && activeSection === "location" && (
                       <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-xl border-2 border-gray-200 z-50 max-h-64 overflow-y-auto">
@@ -223,33 +216,33 @@ export default function DynamicSearchBar() {
                     )}
                   </div>
 
-                  {/* Date Section */}
-                  <div className="relative">
-                    <Popover open={showCalendar} onOpenChange={setShowCalendar}>
-                      <PopoverTrigger asChild>
-                        <div
-                          className={cn(
-                            "border-2 rounded-lg p-4 cursor-pointer transition-all duration-200 min-h-[100px] flex flex-col justify-center bg-white shadow-sm hover:shadow-md",
-                            activeSection === "dates"
-                              ? "border-black bg-gray-50 shadow-lg"
-                              : "border-gray-200 hover:border-gray-300"
-                          )}
-                          onClick={() => {
-                            setActiveSection("dates")
-                            setShowCalendar(true)
-                          }}
-                        >
-                          <div className="flex items-center mb-4">
-                            <div className="bg-gray-100 rounded-lg p-3 mr-4">
-                              <Calendar className="h-6 w-6 text-gray-600" />
-                            </div>
-                            <span className="font-bold text-gray-900 text-xl">When</span>
-                          </div>
-                          <div className="text-lg text-gray-600 font-medium">
-                            {getDateRangeText()}
-                          </div>
+              {/* Date Section */}
+              <div className="relative">
+                <Popover open={showCalendar} onOpenChange={setShowCalendar}>
+                  <PopoverTrigger asChild>
+                    <div
+                      className={cn(
+                        "border-2 rounded-lg p-3 cursor-pointer transition-all duration-200 min-h-[80px] flex flex-col justify-center bg-white shadow-sm hover:shadow-md",
+                        activeSection === "dates"
+                          ? "border-black bg-gray-50 shadow-lg"
+                          : "border-gray-200 hover:border-gray-300"
+                      )}
+                      onClick={() => {
+                        setActiveSection("dates")
+                        setShowCalendar(true)
+                      }}
+                    >
+                      <div className="flex items-center mb-2">
+                        <div className="bg-gray-100 rounded-lg p-2 mr-3">
+                          <Calendar className="h-4 w-4 text-gray-600" />
                         </div>
-                      </PopoverTrigger>
+                        <span className="font-semibold text-gray-900 text-base">When</span>
+                      </div>
+                      <div className="text-sm text-gray-600 font-medium">
+                        {getDateRangeText()}
+                      </div>
+                    </div>
+                  </PopoverTrigger>
                       <PopoverContent className="w-auto p-0" align="start">
                         <CalendarComponent
                           mode="range"
@@ -262,33 +255,33 @@ export default function DynamicSearchBar() {
                     </Popover>
                   </div>
 
-                  {/* Guests Section */}
-                  <div className="relative">
-                    <Popover open={showGuestSelector} onOpenChange={setShowGuestSelector}>
-                      <PopoverTrigger asChild>
-                        <div
-                          className={cn(
-                            "border-2 rounded-lg p-4 cursor-pointer transition-all duration-200 min-h-[100px] flex flex-col justify-center bg-white shadow-sm hover:shadow-md",
-                            activeSection === "guests"
-                              ? "border-black bg-gray-50 shadow-lg"
-                              : "border-gray-200 hover:border-gray-300"
-                          )}
-                          onClick={() => {
-                            setActiveSection("guests")
-                            setShowGuestSelector(true)
-                          }}
-                        >
-                          <div className="flex items-center mb-4">
-                            <div className="bg-gray-100 rounded-lg p-3 mr-4">
-                              <Users className="h-6 w-6 text-gray-600" />
-                            </div>
-                            <span className="font-bold text-gray-900 text-xl">Who</span>
-                          </div>
-                          <div className="text-lg text-gray-600 font-medium">
-                            {getGuestText()}
-                          </div>
+              {/* Guests Section */}
+              <div className="relative">
+                <Popover open={showGuestSelector} onOpenChange={setShowGuestSelector}>
+                  <PopoverTrigger asChild>
+                    <div
+                      className={cn(
+                        "border-2 rounded-lg p-3 cursor-pointer transition-all duration-200 min-h-[80px] flex flex-col justify-center bg-white shadow-sm hover:shadow-md",
+                        activeSection === "guests"
+                          ? "border-black bg-gray-50 shadow-lg"
+                          : "border-gray-200 hover:border-gray-300"
+                      )}
+                      onClick={() => {
+                        setActiveSection("guests")
+                        setShowGuestSelector(true)
+                      }}
+                    >
+                      <div className="flex items-center mb-2">
+                        <div className="bg-gray-100 rounded-lg p-2 mr-3">
+                          <Users className="h-4 w-4 text-gray-600" />
                         </div>
-                      </PopoverTrigger>
+                        <span className="font-semibold text-gray-900 text-base">Who</span>
+                      </div>
+                      <div className="text-sm text-gray-600 font-medium">
+                        {getGuestText()}
+                      </div>
+                    </div>
+                  </PopoverTrigger>
                       <PopoverContent className="w-80 p-6" align="start">
                         <div className="space-y-6">
                           {/* Adults */}
@@ -380,17 +373,17 @@ export default function DynamicSearchBar() {
                   </div>
                 </div>
 
-                {/* Search Button */}
-                <div className="mt-6 flex justify-center">
-                  <Button
-                    onClick={handleSearch}
-                    className="bg-black hover:bg-gray-800 text-white px-10 py-3 rounded-lg text-lg font-bold shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
-                  >
-                    <Search className="h-5 w-5 mr-3" />
-                    Search Retreats
-                  </Button>
-                </div>
-              </div>
+            </div>
+
+            {/* Search Button */}
+            <div className="mt-4 flex justify-center">
+              <Button
+                onClick={handleSearch}
+                className="bg-black hover:bg-gray-800 text-white px-8 py-2 rounded-lg text-base font-bold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+              >
+                <Search className="h-4 w-4 mr-2" />
+                Search Retreats
+              </Button>
             </div>
           </div>
         </div>
