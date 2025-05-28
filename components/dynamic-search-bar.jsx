@@ -300,7 +300,7 @@ export default function DynamicSearchBar() {
                       selected={dateRange}
                       onSelect={handleDateSelect}
                       numberOfMonths={2}
-                      className="text-xs"
+                      className="text-xs gap-4"
                     />
                   </div>
                 </div>
