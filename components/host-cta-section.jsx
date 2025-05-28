@@ -18,7 +18,7 @@ export default function HostCTASection() {
               viewport={{ once: true }}
               className="text-3xl md:text-4xl font-bold tracking-tight"
             >
-              Ready to Host Your Retreat?
+              Partner With Retreat World Wide
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -27,8 +27,7 @@ export default function HostCTASection() {
               viewport={{ once: true }}
               className="text-lg text-muted-foreground"
             >
-              Join our community of property owners and start earning by sharing your unique space with retreat
-              organizers worldwide.
+              Transform your property into a premier retreat destination. Join our exclusive network of hospitality partners and unlock new revenue opportunities while connecting with wellness professionals worldwide.
             </motion.p>
 
             <motion.div
@@ -43,9 +42,9 @@ export default function HostCTASection() {
                   <span className="text-red-600 font-medium">1</span>
                 </div>
                 <div>
-                  <h3 className="font-medium">List your property</h3>
+                  <h3 className="font-medium">Create Your Property Profile</h3>
                   <p className="text-muted-foreground">
-                    Create a detailed listing with photos, amenities, and availability.
+                    Showcase your property with professional photography, detailed amenities, and flexible availability calendar.
                   </p>
                 </div>
               </div>
@@ -55,9 +54,9 @@ export default function HostCTASection() {
                   <span className="text-red-600 font-medium">2</span>
                 </div>
                 <div>
-                  <h3 className="font-medium">Welcome guests</h3>
+                  <h3 className="font-medium">Connect With Retreat Leaders</h3>
                   <p className="text-muted-foreground">
-                    Host retreat organizers and their participants at your property.
+                    Build relationships with wellness professionals and retreat organizers seeking exceptional venues.
                   </p>
                 </div>
               </div>
@@ -67,9 +66,9 @@ export default function HostCTASection() {
                   <span className="text-red-600 font-medium">3</span>
                 </div>
                 <div>
-                  <h3 className="font-medium">Get paid</h3>
+                  <h3 className="font-medium">Maximize Your Revenue</h3>
                   <p className="text-muted-foreground">
-                    Receive secure payments for each booking through our platform.
+                    Receive guaranteed payments with our secure platform and comprehensive booking management system.
                   </p>
                 </div>
               </div>
@@ -83,13 +82,13 @@ export default function HostCTASection() {
               className="flex flex-col sm:flex-row gap-4"
             >
               <Link href="/signup">
-                <Button size="lg" className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-lg px-8 py-6 h-auto">
-                  Become a Host
+                <Button size="lg" className="w-full sm:w-auto bg-black hover:bg-gray-800 text-white px-8 py-3 rounded-lg font-medium">
+                  Join Our Network
                 </Button>
               </Link>
               <Link href="/host-info">
-                <Button size="lg" variant="outline" className="w-full sm:w-auto text-lg px-8 py-6 h-auto">
-                  Learn More
+                <Button size="lg" variant="outline" className="w-full sm:w-auto border-black text-black hover:bg-black hover:text-white px-8 py-3 rounded-lg font-medium">
+                  Partnership Details
                 </Button>
               </Link>
             </motion.div>

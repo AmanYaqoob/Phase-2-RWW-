@@ -98,27 +98,26 @@ export default function Home() {
             <div>
               <div className="text-center space-y-4 mb-8">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                  Ready to Host Your Retreat?
+                  Partner With Retreat World Wide
                 </h2>
                 <p className="mx-auto max-w-[700px] text-white/80 md:text-xl">
-                  List your property on Retreat World Wide and connect with retreat leaders and participants from around
-                  the globe.
+                  Transform your property into a premier retreat destination. Join our exclusive network of hospitality partners and unlock new revenue opportunities.
                 </p>
               </div>
               <div className="flex flex-wrap justify-center gap-4">
                 <Button
                   size="lg"
                   variant="secondary"
-                  className="transition-transform hover:scale-105 bg-white text-black hover:bg-white/90"
+                  className="transition-transform hover:scale-105 bg-white text-black hover:bg-white/90 px-8 py-3 rounded-lg font-medium"
                 >
-                  List Your Property
+                  Join Our Network
                 </Button>
                 <Button
                   size="lg"
                   variant="outline"
-                  className="transition-transform hover:scale-105 border-white text-white hover:bg-white/20"
+                  className="transition-transform hover:scale-105 border-white text-white hover:bg-white/20 px-8 py-3 rounded-lg font-medium"
                 >
-                  Learn More
+                  Partnership Details
                 </Button>
               </div>
             </div>
