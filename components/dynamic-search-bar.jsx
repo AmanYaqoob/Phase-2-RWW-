@@ -199,7 +199,7 @@ export default function DynamicSearchBar() {
           </div>
         </div>
       ) : (
-        <div className="bg-white rounded-lg shadow-2xl border-2 border-gray-200 overflow-hidden max-w-6xl mx-auto">
+        <div className="bg-white rounded-lg shadow-2xl border-2 border-gray-200 overflow-hidden max-w-4xl mx-auto">
           {/* Header */}
           <div className="p-4 border-b-2 border-gray-100 bg-gradient-to-r from-gray-50 to-white">
             <div className="flex items-center justify-between">
@@ -215,341 +215,265 @@ export default function DynamicSearchBar() {
             </div>
           </div>
 
-          {/* Search Sections */}
-          <div className="p-4">
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
+          {/* Search Sections - Vertical Stack */}
+          <div className="p-6 space-y-4">
 
-              {/* Location Section */}
-              <div className="relative">
-                <div
-                  className={cn(
-                    "border-2 rounded-lg p-3 transition-all duration-200 min-h-[80px] flex flex-col justify-center bg-white shadow-sm hover:shadow-md",
-                    activeSection === "location"
-                      ? "border-black bg-gray-50 shadow-lg"
-                      : "border-gray-200 hover:border-gray-300"
-                  )}
-                >
-                  <div className="flex items-center mb-2">
-                    <div className="bg-gray-100 rounded-lg p-2 mr-3">
-                      <MapPin className="h-4 w-4 text-gray-600" />
-                    </div>
-                    <span className="font-semibold text-gray-900 text-base">Where</span>
-                  </div>
-                  <Input
-                    placeholder="Search destinations"
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
-                    className="border-0 p-0 text-sm placeholder:text-gray-400 focus-visible:ring-0 font-medium bg-transparent"
-                    onFocus={() => {
-                      setActiveSection("location")
-                      setShowLocationSuggestions(true)
-                    }}
-                    onClick={() => {
-                      setActiveSection("location")
-                      setShowLocationSuggestions(true)
-                    }}
-                  />
+            {/* Location Section */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="bg-gray-100 rounded-lg p-3">
+                  <MapPin className="h-5 w-5 text-gray-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900 text-lg">Where</h3>
+                  <p className="text-sm text-gray-500">Choose your destination</p>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Input
+                  placeholder="Search destinations"
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  className="w-full p-3 border-2 border-gray-200 rounded-lg focus:border-black focus:ring-0 text-base"
+                  onFocus={() => setActiveSection("location")}
+                />
+
+                {/* Location Suggestions - Always Visible */}
+                <div className="grid grid-cols-2 gap-2 mt-3">
+                  {filteredLocations.map((loc) => (
+                    <button
+                      key={loc.id}
+                      onClick={() => handleLocationSelect(loc)}
+                      className={cn(
+                        "flex items-center gap-3 p-3 rounded-lg border-2 transition-all duration-200 text-left",
+                        location === loc.name
+                          ? "border-black bg-black text-white"
+                          : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+                      )}
+                    >
+                      <MapPin className="h-4 w-4" />
+                      <div>
+                        <div className="font-medium text-sm">{loc.name}</div>
+                        <div className={cn(
+                          "text-xs",
+                          location === loc.name ? "text-gray-300" : "text-gray-500"
+                        )}>{loc.type}</div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Date Section */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="bg-gray-100 rounded-lg p-3">
+                  <Calendar className="h-5 w-5 text-gray-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900 text-lg">When</h3>
+                  <p className="text-sm text-gray-500">Select your dates</p>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <div className="text-center p-3 bg-gray-50 rounded-lg">
+                  <span className="text-base font-medium text-gray-900">
+                    {getDateRangeText()}
+                  </span>
                 </div>
 
-                    {showLocationSuggestions && activeSection === "location" && (
-                      <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-xl border-2 border-gray-200 z-50 max-h-64 overflow-y-auto">
-                        {filteredLocations.map((loc) => (
-                          <div
-                            key={loc.id}
-                            className="p-4 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0 transition-colors duration-150"
-                            onClick={() => handleLocationSelect(loc)}
-                          >
-                            <div className="flex items-center">
-                              <div className="bg-gray-100 rounded-lg p-2 mr-3">
-                                <MapPin className="h-4 w-4 text-gray-600" />
-                              </div>
-                              <div>
-                                <div className="font-semibold text-gray-900">{loc.name}</div>
-                                <div className="text-sm text-gray-500">{loc.type}</div>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
+                {/* Inline Calendar */}
+                <div className="flex justify-center">
+                  <CalendarComponent
+                    mode="range"
+                    selected={dateRange}
+                    onSelect={handleDateSelect}
+                    numberOfMonths={2}
+                    className="rounded-lg border-2 border-gray-200"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Guests Section */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="bg-gray-100 rounded-lg p-3">
+                  <Users className="h-5 w-5 text-gray-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900 text-lg">Who</h3>
+                  <p className="text-sm text-gray-500">Number of guests</p>
+                </div>
               </div>
 
-              {/* Date Section */}
-              <div className="relative">
-                <Popover open={showCalendar} onOpenChange={setShowCalendar}>
-                  <PopoverTrigger asChild>
-                    <div
-                      className={cn(
-                        "border-2 rounded-lg p-3 cursor-pointer transition-all duration-200 min-h-[80px] flex flex-col justify-center bg-white shadow-sm hover:shadow-md",
-                        activeSection === "dates"
-                          ? "border-black bg-gray-50 shadow-lg"
-                          : "border-gray-200 hover:border-gray-300"
-                      )}
-                      onClick={() => {
-                        setActiveSection("dates")
-                        setShowCalendar(true)
-                      }}
+              <div className="space-y-4">
+                {/* Adults */}
+                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                  <div>
+                    <div className="font-semibold text-gray-900">Adults</div>
+                    <div className="text-sm text-gray-500">Ages 13 or above</div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="rounded-lg h-10 w-10 p-0 border-2"
+                      onClick={() => updateGuestCount("adults", "decrement")}
+                      disabled={guests.adults <= 1}
                     >
-                      <div className="flex items-center mb-2">
-                        <div className="bg-gray-100 rounded-lg p-2 mr-3">
-                          <Calendar className="h-4 w-4 text-gray-600" />
-                        </div>
-                        <span className="font-semibold text-gray-900 text-base">When</span>
-                      </div>
-                      <div className="text-sm text-gray-600 font-medium">
-                        {getDateRangeText()}
-                      </div>
-                    </div>
-                  </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <CalendarComponent
-                          mode="range"
-                          selected={dateRange}
-                          onSelect={handleDateSelect}
-                          numberOfMonths={2}
-                          className="rounded-lg border-0"
-                        />
-                      </PopoverContent>
-                </Popover>
+                      <Minus className="h-4 w-4" />
+                    </Button>
+                    <span className="w-8 text-center font-semibold text-lg">{guests.adults}</span>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="rounded-lg h-10 w-10 p-0 border-2"
+                      onClick={() => updateGuestCount("adults", "increment")}
+                    >
+                      <Plus className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Children */}
+                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                  <div>
+                    <div className="font-semibold text-gray-900">Children</div>
+                    <div className="text-sm text-gray-500">Ages 2-12</div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="rounded-lg h-10 w-10 p-0 border-2"
+                      onClick={() => updateGuestCount("children", "decrement")}
+                      disabled={guests.children <= 0}
+                    >
+                      <Minus className="h-4 w-4" />
+                    </Button>
+                    <span className="w-8 text-center font-semibold text-lg">{guests.children}</span>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="rounded-lg h-10 w-10 p-0 border-2"
+                      onClick={() => updateGuestCount("children", "increment")}
+                    >
+                      <Plus className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Pets */}
+                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                  <div>
+                    <div className="font-semibold text-gray-900">Pets</div>
+                    <div className="text-sm text-gray-500">Bringing a service animal?</div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="rounded-lg h-10 w-10 p-0 border-2"
+                      onClick={() => updateGuestCount("pets", "decrement")}
+                      disabled={guests.pets <= 0}
+                    >
+                      <Minus className="h-4 w-4" />
+                    </Button>
+                    <span className="w-8 text-center font-semibold text-lg">{guests.pets}</span>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="rounded-lg h-10 w-10 p-0 border-2"
+                      onClick={() => updateGuestCount("pets", "increment")}
+                    >
+                      <Plus className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Activities Section */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="bg-gray-100 rounded-lg p-3">
+                  <Activity className="h-5 w-5 text-gray-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900 text-lg">Activities</h3>
+                  <p className="text-sm text-gray-500">What would you like to do?</p>
+                </div>
               </div>
 
-              {/* Guests Section */}
-              <div className="relative">
-                <Popover open={showGuestSelector} onOpenChange={setShowGuestSelector}>
-                  <PopoverTrigger asChild>
-                    <div
+              <div className="grid grid-cols-2 gap-3">
+                {activityOptions.map((activity) => {
+                  const IconComponent = activity.icon
+                  const isSelected = selectedActivities.find(a => a.id === activity.id)
+                  return (
+                    <button
+                      key={activity.id}
+                      onClick={() => toggleActivity(activity)}
                       className={cn(
-                        "border-2 rounded-lg p-3 cursor-pointer transition-all duration-200 min-h-[80px] flex flex-col justify-center bg-white shadow-sm hover:shadow-md",
-                        activeSection === "guests"
-                          ? "border-black bg-gray-50 shadow-lg"
-                          : "border-gray-200 hover:border-gray-300"
+                        "flex items-center gap-3 p-4 rounded-lg border-2 transition-all duration-200 text-left",
+                        isSelected
+                          ? "border-black bg-black text-white"
+                          : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
                       )}
-                      onClick={() => {
-                        setActiveSection("guests")
-                        setShowGuestSelector(true)
-                      }}
                     >
-                      <div className="flex items-center mb-2">
-                        <div className="bg-gray-100 rounded-lg p-2 mr-3">
-                          <Users className="h-4 w-4 text-gray-600" />
-                        </div>
-                        <span className="font-semibold text-gray-900 text-base">Who</span>
-                      </div>
-                      <div className="text-sm text-gray-600 font-medium">
-                        {getGuestText()}
-                      </div>
-                    </div>
-                  </PopoverTrigger>
-                      <PopoverContent className="w-80 p-6" align="start">
-                        <div className="space-y-6">
-                          {/* Adults */}
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <div className="font-semibold text-gray-900">Adults</div>
-                              <div className="text-sm text-gray-500">Ages 13 or above</div>
-                            </div>
-                            <div className="flex items-center gap-3">
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                className="rounded-lg h-10 w-10 p-0 border-2"
-                                onClick={() => updateGuestCount("adults", "decrement")}
-                                disabled={guests.adults <= 1}
-                              >
-                                <Minus className="h-4 w-4" />
-                              </Button>
-                              <span className="w-8 text-center font-semibold text-lg">{guests.adults}</span>
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                className="rounded-lg h-10 w-10 p-0 border-2"
-                                onClick={() => updateGuestCount("adults", "increment")}
-                              >
-                                <Plus className="h-4 w-4" />
-                              </Button>
-                            </div>
-                          </div>
+                      <IconComponent className="h-5 w-5" />
+                      <span className="font-medium">{activity.name}</span>
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
 
-                          {/* Children */}
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <div className="font-semibold text-gray-900">Children</div>
-                              <div className="text-sm text-gray-500">Ages 2-12</div>
-                            </div>
-                            <div className="flex items-center gap-3">
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                className="rounded-lg h-10 w-10 p-0 border-2"
-                                onClick={() => updateGuestCount("children", "decrement")}
-                                disabled={guests.children <= 0}
-                              >
-                                <Minus className="h-4 w-4" />
-                              </Button>
-                              <span className="w-8 text-center font-semibold text-lg">{guests.children}</span>
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                className="rounded-lg h-10 w-10 p-0 border-2"
-                                onClick={() => updateGuestCount("children", "increment")}
-                              >
-                                <Plus className="h-4 w-4" />
-                              </Button>
-                            </div>
-                          </div>
-
-                          {/* Pets */}
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <div className="font-semibold text-gray-900">Pets</div>
-                              <div className="text-sm text-gray-500">Bringing a service animal?</div>
-                            </div>
-                            <div className="flex items-center gap-3">
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                className="rounded-lg h-10 w-10 p-0 border-2"
-                                onClick={() => updateGuestCount("pets", "decrement")}
-                                disabled={guests.pets <= 0}
-                              >
-                                <Minus className="h-4 w-4" />
-                              </Button>
-                              <span className="w-8 text-center font-semibold text-lg">{guests.pets}</span>
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                className="rounded-lg h-10 w-10 p-0 border-2"
-                                onClick={() => updateGuestCount("pets", "increment")}
-                              >
-                                <Plus className="h-4 w-4" />
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-                      </PopoverContent>
-                </Popover>
+            {/* Amenities Section */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="bg-gray-100 rounded-lg p-3">
+                  <Wifi className="h-5 w-5 text-gray-600" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900 text-lg">Amenities</h3>
+                  <p className="text-sm text-gray-500">What do you need?</p>
+                </div>
               </div>
 
-              {/* Activities Section */}
-              <div className="relative">
-                <Popover open={showActivitySelector} onOpenChange={setShowActivitySelector}>
-                  <PopoverTrigger asChild>
-                    <div
+              <div className="grid grid-cols-2 gap-3">
+                {amenityOptions.map((amenity) => {
+                  const IconComponent = amenity.icon
+                  const isSelected = selectedAmenities.find(a => a.id === amenity.id)
+                  return (
+                    <button
+                      key={amenity.id}
+                      onClick={() => toggleAmenity(amenity)}
                       className={cn(
-                        "border-2 rounded-lg p-3 cursor-pointer transition-all duration-200 min-h-[80px] flex flex-col justify-center bg-white shadow-sm hover:shadow-md",
-                        activeSection === "activities"
-                          ? "border-black bg-gray-50 shadow-lg"
-                          : "border-gray-200 hover:border-gray-300"
+                        "flex items-center gap-3 p-4 rounded-lg border-2 transition-all duration-200 text-left",
+                        isSelected
+                          ? "border-black bg-black text-white"
+                          : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
                       )}
-                      onClick={() => {
-                        setActiveSection("activities")
-                        setShowActivitySelector(true)
-                      }}
                     >
-                      <div className="flex items-center mb-2">
-                        <div className="bg-gray-100 rounded-lg p-2 mr-3">
-                          <Activity className="h-4 w-4 text-gray-600" />
-                        </div>
-                        <span className="font-semibold text-gray-900 text-base">Activities</span>
-                      </div>
-                      <div className="text-sm text-gray-600 font-medium">
-                        {getActivityText()}
-                      </div>
-                    </div>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-80 p-4" align="start">
-                    <div className="space-y-3">
-                      <h4 className="font-semibold text-gray-900 mb-3">Select Activities</h4>
-                      <div className="grid grid-cols-2 gap-2">
-                        {activityOptions.map((activity) => {
-                          const IconComponent = activity.icon
-                          const isSelected = selectedActivities.find(a => a.id === activity.id)
-                          return (
-                            <button
-                              key={activity.id}
-                              onClick={() => toggleActivity(activity)}
-                              className={cn(
-                                "flex items-center gap-2 p-3 rounded-lg border-2 transition-all duration-200 text-left",
-                                isSelected
-                                  ? "border-black bg-black text-white"
-                                  : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
-                              )}
-                            >
-                              <IconComponent className="h-4 w-4" />
-                              <span className="text-sm font-medium">{activity.name}</span>
-                            </button>
-                          )
-                        })}
-                      </div>
-                    </div>
-                  </PopoverContent>
-                </Popover>
-              </div>
-
-              {/* Amenities Section */}
-              <div className="relative">
-                <Popover open={showAmenitySelector} onOpenChange={setShowAmenitySelector}>
-                  <PopoverTrigger asChild>
-                    <div
-                      className={cn(
-                        "border-2 rounded-lg p-3 cursor-pointer transition-all duration-200 min-h-[80px] flex flex-col justify-center bg-white shadow-sm hover:shadow-md",
-                        activeSection === "amenities"
-                          ? "border-black bg-gray-50 shadow-lg"
-                          : "border-gray-200 hover:border-gray-300"
-                      )}
-                      onClick={() => {
-                        setActiveSection("amenities")
-                        setShowAmenitySelector(true)
-                      }}
-                    >
-                      <div className="flex items-center mb-2">
-                        <div className="bg-gray-100 rounded-lg p-2 mr-3">
-                          <Wifi className="h-4 w-4 text-gray-600" />
-                        </div>
-                        <span className="font-semibold text-gray-900 text-base">Amenities</span>
-                      </div>
-                      <div className="text-sm text-gray-600 font-medium">
-                        {getAmenityText()}
-                      </div>
-                    </div>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-80 p-4" align="start">
-                    <div className="space-y-3">
-                      <h4 className="font-semibold text-gray-900 mb-3">Select Amenities</h4>
-                      <div className="grid grid-cols-2 gap-2">
-                        {amenityOptions.map((amenity) => {
-                          const IconComponent = amenity.icon
-                          const isSelected = selectedAmenities.find(a => a.id === amenity.id)
-                          return (
-                            <button
-                              key={amenity.id}
-                              onClick={() => toggleAmenity(amenity)}
-                              className={cn(
-                                "flex items-center gap-2 p-3 rounded-lg border-2 transition-all duration-200 text-left",
-                                isSelected
-                                  ? "border-black bg-black text-white"
-                                  : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
-                              )}
-                            >
-                              <IconComponent className="h-4 w-4" />
-                              <span className="text-sm font-medium">{amenity.name}</span>
-                            </button>
-                          )
-                        })}
-                      </div>
-                    </div>
-                  </PopoverContent>
-                </Popover>
+                      <IconComponent className="h-5 w-5" />
+                      <span className="font-medium">{amenity.name}</span>
+                    </button>
+                  )
+                })}
               </div>
             </div>
 
             {/* Search Button */}
-            <div className="mt-4 flex justify-center">
+            <div className="mt-6 flex justify-center">
               <Button
                 onClick={handleSearch}
-                className="bg-black hover:bg-gray-800 text-white px-8 py-2 rounded-lg text-base font-bold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                className="bg-black hover:bg-gray-800 text-white px-12 py-4 rounded-lg text-lg font-bold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
               >
-                <Search className="h-4 w-4 mr-2" />
+                <Search className="h-5 w-5 mr-3" />
                 Search Retreats
               </Button>
             </div>
