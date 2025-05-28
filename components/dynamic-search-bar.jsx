@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
-import { Search, MapPin, Calendar, Users, Plus, Minus, X } from "lucide-react"
+import { Search, MapPin, Calendar, Users, Plus, Minus, X, Activity, Wifi, Car, Coffee, Utensils, Dumbbell, Waves, Mountain } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
@@ -21,6 +21,30 @@ const locationSuggestions = [
   { id: 8, name: "Big Sur, California", type: "Mountain retreat" },
 ]
 
+// Activity options
+const activityOptions = [
+  { id: 1, name: "Yoga", icon: Activity },
+  { id: 2, name: "Meditation", icon: Mountain },
+  { id: 3, name: "Surfing", icon: Waves },
+  { id: 4, name: "Hiking", icon: Mountain },
+  { id: 5, name: "Fitness", icon: Dumbbell },
+  { id: 6, name: "Wellness", icon: Activity },
+  { id: 7, name: "Spiritual", icon: Mountain },
+  { id: 8, name: "Adventure", icon: Mountain },
+]
+
+// Amenities options
+const amenityOptions = [
+  { id: 1, name: "WiFi", icon: Wifi },
+  { id: 2, name: "Parking", icon: Car },
+  { id: 3, name: "Meals Included", icon: Utensils },
+  { id: 4, name: "Coffee/Tea", icon: Coffee },
+  { id: 5, name: "Gym/Fitness", icon: Dumbbell },
+  { id: 6, name: "Pool", icon: Waves },
+  { id: 7, name: "Spa Services", icon: Activity },
+  { id: 8, name: "Kitchen Access", icon: Utensils },
+]
+
 export default function DynamicSearchBar() {
   const [isExpanded, setIsExpanded] = useState(false)
   const [activeSection, setActiveSection] = useState(null)
@@ -29,8 +53,12 @@ export default function DynamicSearchBar() {
   const [showLocationSuggestions, setShowLocationSuggestions] = useState(false)
   const [dateRange, setDateRange] = useState({ from: null, to: null })
   const [guests, setGuests] = useState({ adults: 2, children: 0, pets: 0 })
+  const [selectedActivities, setSelectedActivities] = useState([])
+  const [selectedAmenities, setSelectedAmenities] = useState([])
   const [showCalendar, setShowCalendar] = useState(false)
   const [showGuestSelector, setShowGuestSelector] = useState(false)
+  const [showActivitySelector, setShowActivitySelector] = useState(false)
+  const [showAmenitySelector, setShowAmenitySelector] = useState(false)
 
   const searchBarRef = useRef(null)
 
@@ -41,10 +69,8 @@ export default function DynamicSearchBar() {
         loc.name.toLowerCase().includes(location.toLowerCase())
       )
       setFilteredLocations(filtered)
-      setShowLocationSuggestions(true)
     } else {
-      setFilteredLocations(locationSuggestions.slice(0, 4))
-      setShowLocationSuggestions(false)
+      setFilteredLocations(locationSuggestions.slice(0, 6))
     }
   }, [location])
 
@@ -57,6 +83,8 @@ export default function DynamicSearchBar() {
         setShowLocationSuggestions(false)
         setShowCalendar(false)
         setShowGuestSelector(false)
+        setShowActivitySelector(false)
+        setShowAmenitySelector(false)
       }
     }
 
@@ -107,8 +135,36 @@ export default function DynamicSearchBar() {
     return text
   }
 
+  const toggleActivity = (activity) => {
+    setSelectedActivities(prev =>
+      prev.find(a => a.id === activity.id)
+        ? prev.filter(a => a.id !== activity.id)
+        : [...prev, activity]
+    )
+  }
+
+  const toggleAmenity = (amenity) => {
+    setSelectedAmenities(prev =>
+      prev.find(a => a.id === amenity.id)
+        ? prev.filter(a => a.id !== amenity.id)
+        : [...prev, amenity]
+    )
+  }
+
+  const getActivityText = () => {
+    if (selectedActivities.length === 0) return "Any activity"
+    if (selectedActivities.length === 1) return selectedActivities[0].name
+    return `${selectedActivities.length} activities`
+  }
+
+  const getAmenityText = () => {
+    if (selectedAmenities.length === 0) return "Any amenities"
+    if (selectedAmenities.length === 1) return selectedAmenities[0].name
+    return `${selectedAmenities.length} amenities`
+  }
+
   const handleSearch = () => {
-    console.log({ location, dateRange, guests })
+    console.log({ location, dateRange, guests, selectedActivities, selectedAmenities })
     // Handle search logic here
   }
 
@@ -125,9 +181,11 @@ export default function DynamicSearchBar() {
                 <Search className="h-5 w-5 text-gray-600" />
               </div>
               <div className="flex flex-col">
-                <span className="font-semibold text-gray-900 text-lg">Where to?</span>
+                <span className="font-semibold text-gray-900 text-lg">
+                  {location || "Where to?"}
+                </span>
                 <span className="text-sm text-gray-500">
-                  {location || getDateRangeText()} • {getGuestText()}
+                  {getDateRangeText()} • {getGuestText()} • {getActivityText()} • {getAmenityText()}
                 </span>
               </div>
             </div>
@@ -141,7 +199,7 @@ export default function DynamicSearchBar() {
           </div>
         </div>
       ) : (
-        <div className="bg-white rounded-lg shadow-2xl border-2 border-gray-200 overflow-hidden max-w-4xl mx-auto">
+        <div className="bg-white rounded-lg shadow-2xl border-2 border-gray-200 overflow-hidden max-w-6xl mx-auto">
           {/* Header */}
           <div className="p-4 border-b-2 border-gray-100 bg-gradient-to-r from-gray-50 to-white">
             <div className="flex items-center justify-between">
@@ -159,21 +217,17 @@ export default function DynamicSearchBar() {
 
           {/* Search Sections */}
           <div className="p-4">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
 
               {/* Location Section */}
               <div className="relative">
                 <div
                   className={cn(
-                    "border-2 rounded-lg p-3 cursor-pointer transition-all duration-200 min-h-[80px] flex flex-col justify-center bg-white shadow-sm hover:shadow-md",
+                    "border-2 rounded-lg p-3 transition-all duration-200 min-h-[80px] flex flex-col justify-center bg-white shadow-sm hover:shadow-md",
                     activeSection === "location"
                       ? "border-black bg-gray-50 shadow-lg"
                       : "border-gray-200 hover:border-gray-300"
                   )}
-                  onClick={() => {
-                    setActiveSection("location")
-                    setShowLocationSuggestions(true)
-                  }}
                 >
                   <div className="flex items-center mb-2">
                     <div className="bg-gray-100 rounded-lg p-2 mr-3">
@@ -185,8 +239,12 @@ export default function DynamicSearchBar() {
                     placeholder="Search destinations"
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
-                    className="border-0 p-0 text-sm placeholder:text-gray-400 focus-visible:ring-0 font-medium"
+                    className="border-0 p-0 text-sm placeholder:text-gray-400 focus-visible:ring-0 font-medium bg-transparent"
                     onFocus={() => {
+                      setActiveSection("location")
+                      setShowLocationSuggestions(true)
+                    }}
+                    onClick={() => {
                       setActiveSection("location")
                       setShowLocationSuggestions(true)
                     }}
@@ -369,6 +427,118 @@ export default function DynamicSearchBar() {
                           </div>
                         </div>
                       </PopoverContent>
+                </Popover>
+              </div>
+
+              {/* Activities Section */}
+              <div className="relative">
+                <Popover open={showActivitySelector} onOpenChange={setShowActivitySelector}>
+                  <PopoverTrigger asChild>
+                    <div
+                      className={cn(
+                        "border-2 rounded-lg p-3 cursor-pointer transition-all duration-200 min-h-[80px] flex flex-col justify-center bg-white shadow-sm hover:shadow-md",
+                        activeSection === "activities"
+                          ? "border-black bg-gray-50 shadow-lg"
+                          : "border-gray-200 hover:border-gray-300"
+                      )}
+                      onClick={() => {
+                        setActiveSection("activities")
+                        setShowActivitySelector(true)
+                      }}
+                    >
+                      <div className="flex items-center mb-2">
+                        <div className="bg-gray-100 rounded-lg p-2 mr-3">
+                          <Activity className="h-4 w-4 text-gray-600" />
+                        </div>
+                        <span className="font-semibold text-gray-900 text-base">Activities</span>
+                      </div>
+                      <div className="text-sm text-gray-600 font-medium">
+                        {getActivityText()}
+                      </div>
+                    </div>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-80 p-4" align="start">
+                    <div className="space-y-3">
+                      <h4 className="font-semibold text-gray-900 mb-3">Select Activities</h4>
+                      <div className="grid grid-cols-2 gap-2">
+                        {activityOptions.map((activity) => {
+                          const IconComponent = activity.icon
+                          const isSelected = selectedActivities.find(a => a.id === activity.id)
+                          return (
+                            <button
+                              key={activity.id}
+                              onClick={() => toggleActivity(activity)}
+                              className={cn(
+                                "flex items-center gap-2 p-3 rounded-lg border-2 transition-all duration-200 text-left",
+                                isSelected
+                                  ? "border-black bg-black text-white"
+                                  : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+                              )}
+                            >
+                              <IconComponent className="h-4 w-4" />
+                              <span className="text-sm font-medium">{activity.name}</span>
+                            </button>
+                          )
+                        })}
+                      </div>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              </div>
+
+              {/* Amenities Section */}
+              <div className="relative">
+                <Popover open={showAmenitySelector} onOpenChange={setShowAmenitySelector}>
+                  <PopoverTrigger asChild>
+                    <div
+                      className={cn(
+                        "border-2 rounded-lg p-3 cursor-pointer transition-all duration-200 min-h-[80px] flex flex-col justify-center bg-white shadow-sm hover:shadow-md",
+                        activeSection === "amenities"
+                          ? "border-black bg-gray-50 shadow-lg"
+                          : "border-gray-200 hover:border-gray-300"
+                      )}
+                      onClick={() => {
+                        setActiveSection("amenities")
+                        setShowAmenitySelector(true)
+                      }}
+                    >
+                      <div className="flex items-center mb-2">
+                        <div className="bg-gray-100 rounded-lg p-2 mr-3">
+                          <Wifi className="h-4 w-4 text-gray-600" />
+                        </div>
+                        <span className="font-semibold text-gray-900 text-base">Amenities</span>
+                      </div>
+                      <div className="text-sm text-gray-600 font-medium">
+                        {getAmenityText()}
+                      </div>
+                    </div>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-80 p-4" align="start">
+                    <div className="space-y-3">
+                      <h4 className="font-semibold text-gray-900 mb-3">Select Amenities</h4>
+                      <div className="grid grid-cols-2 gap-2">
+                        {amenityOptions.map((amenity) => {
+                          const IconComponent = amenity.icon
+                          const isSelected = selectedAmenities.find(a => a.id === amenity.id)
+                          return (
+                            <button
+                              key={amenity.id}
+                              onClick={() => toggleAmenity(amenity)}
+                              className={cn(
+                                "flex items-center gap-2 p-3 rounded-lg border-2 transition-all duration-200 text-left",
+                                isSelected
+                                  ? "border-black bg-black text-white"
+                                  : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+                              )}
+                            >
+                              <IconComponent className="h-4 w-4" />
+                              <span className="text-sm font-medium">{amenity.name}</span>
+                            </button>
+                          )
+                        })}
+                      </div>
+                    </div>
+                  </PopoverContent>
                 </Popover>
               </div>
             </div>
