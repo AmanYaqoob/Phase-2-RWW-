@@ -216,181 +216,155 @@ export default function DynamicSearchBar() {
           </div>
 
           {/* Search Sections - Vertical Stack */}
-          <div className="p-6 space-y-4">
+          <div className="p-4 space-y-3 max-h-96 overflow-y-auto">
 
             {/* Location Section */}
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="bg-gray-100 rounded-lg p-3">
-                  <MapPin className="h-5 w-5 text-gray-600" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 text-lg">Where</h3>
-                  <p className="text-sm text-gray-500">Choose your destination</p>
-                </div>
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <MapPin className="h-4 w-4 text-gray-600" />
+                <h3 className="font-semibold text-gray-900">Where</h3>
               </div>
 
-              <div className="space-y-2">
-                <Input
-                  placeholder="Search destinations"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  className="w-full p-3 border-2 border-gray-200 rounded-lg focus:border-black focus:ring-0 text-base"
-                  onFocus={() => setActiveSection("location")}
-                />
+              <Input
+                placeholder="Search destinations"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                className="w-full p-2 border border-gray-200 rounded-lg focus:border-black focus:ring-0 text-sm"
+                onFocus={() => setActiveSection("location")}
+              />
 
-                {/* Location Suggestions - Always Visible */}
-                <div className="grid grid-cols-2 gap-2 mt-3">
-                  {filteredLocations.map((loc) => (
-                    <button
-                      key={loc.id}
-                      onClick={() => handleLocationSelect(loc)}
-                      className={cn(
-                        "flex items-center gap-3 p-3 rounded-lg border-2 transition-all duration-200 text-left",
-                        location === loc.name
-                          ? "border-black bg-black text-white"
-                          : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
-                      )}
-                    >
-                      <MapPin className="h-4 w-4" />
-                      <div>
-                        <div className="font-medium text-sm">{loc.name}</div>
-                        <div className={cn(
-                          "text-xs",
-                          location === loc.name ? "text-gray-300" : "text-gray-500"
-                        )}>{loc.type}</div>
-                      </div>
-                    </button>
-                  ))}
-                </div>
+              {/* Show only 4 popular destinations */}
+              <div className="grid grid-cols-2 gap-2">
+                {filteredLocations.slice(0, 4).map((loc) => (
+                  <button
+                    key={loc.id}
+                    onClick={() => handleLocationSelect(loc)}
+                    className={cn(
+                      "flex items-center gap-2 p-2 rounded-lg border transition-all duration-200 text-left",
+                      location === loc.name
+                        ? "border-black bg-black text-white"
+                        : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+                    )}
+                  >
+                    <div className="text-xs font-medium">{loc.name}</div>
+                  </button>
+                ))}
               </div>
             </div>
 
             {/* Date Section */}
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="bg-gray-100 rounded-lg p-3">
-                  <Calendar className="h-5 w-5 text-gray-600" />
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <Calendar className="h-4 w-4 text-gray-600" />
+                <h3 className="font-semibold text-gray-900">When</h3>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
+                <div className="p-2 bg-gray-50 rounded-lg text-center">
+                  <div className="text-xs text-gray-500">Check-in</div>
+                  <div className="text-sm font-medium">
+                    {dateRange.from ? format(dateRange.from, "MMM d") : "Add date"}
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 text-lg">When</h3>
-                  <p className="text-sm text-gray-500">Select your dates</p>
+                <div className="p-2 bg-gray-50 rounded-lg text-center">
+                  <div className="text-xs text-gray-500">Check-out</div>
+                  <div className="text-sm font-medium">
+                    {dateRange.to ? format(dateRange.to, "MMM d") : "Add date"}
+                  </div>
                 </div>
               </div>
 
-              <div className="space-y-3">
-                <div className="text-center p-3 bg-gray-50 rounded-lg">
-                  <span className="text-base font-medium text-gray-900">
-                    {getDateRangeText()}
-                  </span>
-                </div>
-
-                {/* Inline Calendar */}
-                <div className="flex justify-center">
-                  <CalendarComponent
-                    mode="range"
-                    selected={dateRange}
-                    onSelect={handleDateSelect}
-                    numberOfMonths={2}
-                    className="rounded-lg border-2 border-gray-200"
-                  />
-                </div>
+              {/* Compact Calendar */}
+              <div className="border border-gray-200 rounded-lg p-2">
+                <CalendarComponent
+                  mode="range"
+                  selected={dateRange}
+                  onSelect={handleDateSelect}
+                  numberOfMonths={1}
+                  className="text-xs"
+                />
               </div>
             </div>
 
             {/* Guests Section */}
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="bg-gray-100 rounded-lg p-3">
-                  <Users className="h-5 w-5 text-gray-600" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 text-lg">Who</h3>
-                  <p className="text-sm text-gray-500">Number of guests</p>
-                </div>
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <Users className="h-4 w-4 text-gray-600" />
+                <h3 className="font-semibold text-gray-900">Who</h3>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-2">
                 {/* Adults */}
-                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                  <div>
-                    <div className="font-semibold text-gray-900">Adults</div>
-                    <div className="text-sm text-gray-500">Ages 13 or above</div>
-                  </div>
-                  <div className="flex items-center gap-3">
+                <div className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
+                  <div className="text-sm font-medium">Adults</div>
+                  <div className="flex items-center gap-2">
                     <Button
                       variant="outline"
                       size="sm"
-                      className="rounded-lg h-10 w-10 p-0 border-2"
+                      className="h-6 w-6 p-0"
                       onClick={() => updateGuestCount("adults", "decrement")}
                       disabled={guests.adults <= 1}
                     >
-                      <Minus className="h-4 w-4" />
+                      <Minus className="h-3 w-3" />
                     </Button>
-                    <span className="w-8 text-center font-semibold text-lg">{guests.adults}</span>
+                    <span className="w-6 text-center text-sm font-semibold">{guests.adults}</span>
                     <Button
                       variant="outline"
                       size="sm"
-                      className="rounded-lg h-10 w-10 p-0 border-2"
+                      className="h-6 w-6 p-0"
                       onClick={() => updateGuestCount("adults", "increment")}
                     >
-                      <Plus className="h-4 w-4" />
+                      <Plus className="h-3 w-3" />
                     </Button>
                   </div>
                 </div>
 
                 {/* Children */}
-                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                  <div>
-                    <div className="font-semibold text-gray-900">Children</div>
-                    <div className="text-sm text-gray-500">Ages 2-12</div>
-                  </div>
-                  <div className="flex items-center gap-3">
+                <div className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
+                  <div className="text-sm font-medium">Children</div>
+                  <div className="flex items-center gap-2">
                     <Button
                       variant="outline"
                       size="sm"
-                      className="rounded-lg h-10 w-10 p-0 border-2"
+                      className="h-6 w-6 p-0"
                       onClick={() => updateGuestCount("children", "decrement")}
                       disabled={guests.children <= 0}
                     >
-                      <Minus className="h-4 w-4" />
+                      <Minus className="h-3 w-3" />
                     </Button>
-                    <span className="w-8 text-center font-semibold text-lg">{guests.children}</span>
+                    <span className="w-6 text-center text-sm font-semibold">{guests.children}</span>
                     <Button
                       variant="outline"
                       size="sm"
-                      className="rounded-lg h-10 w-10 p-0 border-2"
+                      className="h-6 w-6 p-0"
                       onClick={() => updateGuestCount("children", "increment")}
                     >
-                      <Plus className="h-4 w-4" />
+                      <Plus className="h-3 w-3" />
                     </Button>
                   </div>
                 </div>
 
                 {/* Pets */}
-                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                  <div>
-                    <div className="font-semibold text-gray-900">Pets</div>
-                    <div className="text-sm text-gray-500">Bringing a service animal?</div>
-                  </div>
-                  <div className="flex items-center gap-3">
+                <div className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
+                  <div className="text-sm font-medium">Pets</div>
+                  <div className="flex items-center gap-2">
                     <Button
                       variant="outline"
                       size="sm"
-                      className="rounded-lg h-10 w-10 p-0 border-2"
+                      className="h-6 w-6 p-0"
                       onClick={() => updateGuestCount("pets", "decrement")}
                       disabled={guests.pets <= 0}
                     >
-                      <Minus className="h-4 w-4" />
+                      <Minus className="h-3 w-3" />
                     </Button>
-                    <span className="w-8 text-center font-semibold text-lg">{guests.pets}</span>
+                    <span className="w-6 text-center text-sm font-semibold">{guests.pets}</span>
                     <Button
                       variant="outline"
                       size="sm"
-                      className="rounded-lg h-10 w-10 p-0 border-2"
+                      className="h-6 w-6 p-0"
                       onClick={() => updateGuestCount("pets", "increment")}
                     >
-                      <Plus className="h-4 w-4" />
+                      <Plus className="h-3 w-3" />
                     </Button>
                   </div>
                 </div>
@@ -398,19 +372,14 @@ export default function DynamicSearchBar() {
             </div>
 
             {/* Activities Section */}
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="bg-gray-100 rounded-lg p-3">
-                  <Activity className="h-5 w-5 text-gray-600" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 text-lg">Activities</h3>
-                  <p className="text-sm text-gray-500">What would you like to do?</p>
-                </div>
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <Activity className="h-4 w-4 text-gray-600" />
+                <h3 className="font-semibold text-gray-900">Activities</h3>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                {activityOptions.map((activity) => {
+              <div className="grid grid-cols-2 gap-2">
+                {activityOptions.slice(0, 4).map((activity) => {
                   const IconComponent = activity.icon
                   const isSelected = selectedActivities.find(a => a.id === activity.id)
                   return (
@@ -418,14 +387,14 @@ export default function DynamicSearchBar() {
                       key={activity.id}
                       onClick={() => toggleActivity(activity)}
                       className={cn(
-                        "flex items-center gap-3 p-4 rounded-lg border-2 transition-all duration-200 text-left",
+                        "flex items-center gap-2 p-2 rounded-lg border transition-all duration-200 text-left",
                         isSelected
                           ? "border-black bg-black text-white"
                           : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
                       )}
                     >
-                      <IconComponent className="h-5 w-5" />
-                      <span className="font-medium">{activity.name}</span>
+                      <IconComponent className="h-4 w-4" />
+                      <span className="text-xs font-medium">{activity.name}</span>
                     </button>
                   )
                 })}
@@ -433,19 +402,14 @@ export default function DynamicSearchBar() {
             </div>
 
             {/* Amenities Section */}
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="bg-gray-100 rounded-lg p-3">
-                  <Wifi className="h-5 w-5 text-gray-600" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 text-lg">Amenities</h3>
-                  <p className="text-sm text-gray-500">What do you need?</p>
-                </div>
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <Wifi className="h-4 w-4 text-gray-600" />
+                <h3 className="font-semibold text-gray-900">Amenities</h3>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                {amenityOptions.map((amenity) => {
+              <div className="grid grid-cols-2 gap-2">
+                {amenityOptions.slice(0, 4).map((amenity) => {
                   const IconComponent = amenity.icon
                   const isSelected = selectedAmenities.find(a => a.id === amenity.id)
                   return (
@@ -453,14 +417,14 @@ export default function DynamicSearchBar() {
                       key={amenity.id}
                       onClick={() => toggleAmenity(amenity)}
                       className={cn(
-                        "flex items-center gap-3 p-4 rounded-lg border-2 transition-all duration-200 text-left",
+                        "flex items-center gap-2 p-2 rounded-lg border transition-all duration-200 text-left",
                         isSelected
                           ? "border-black bg-black text-white"
                           : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
                       )}
                     >
-                      <IconComponent className="h-5 w-5" />
-                      <span className="font-medium">{amenity.name}</span>
+                      <IconComponent className="h-4 w-4" />
+                      <span className="text-xs font-medium">{amenity.name}</span>
                     </button>
                   )
                 })}
@@ -468,12 +432,12 @@ export default function DynamicSearchBar() {
             </div>
 
             {/* Search Button */}
-            <div className="mt-6 flex justify-center">
+            <div className="mt-4 flex justify-center">
               <Button
                 onClick={handleSearch}
-                className="bg-black hover:bg-gray-800 text-white px-12 py-4 rounded-lg text-lg font-bold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                className="bg-black hover:bg-gray-800 text-white px-8 py-3 rounded-lg font-bold shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                <Search className="h-5 w-5 mr-3" />
+                <Search className="h-4 w-4 mr-2" />
                 Search Retreats
               </Button>
             </div>
