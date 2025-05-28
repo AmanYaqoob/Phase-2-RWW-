@@ -299,7 +299,7 @@ export default function DynamicSearchBar() {
                       mode="range"
                       selected={dateRange}
                       onSelect={handleDateSelect}
-                      numberOfMonths={1}
+                      numberOfMonths={2}
                       className="text-xs"
                     />
                   </div>
