@@ -115,7 +115,7 @@ export default function Home() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="transition-transform hover:scale-105 border-white text-white hover:bg-white/20 px-8 py-3 rounded-lg font-medium"
+                  className="transition-transform hover:scale-105 border-white text-black hover:bg-white/20 px-8 py-3 rounded-lg font-medium"
                 >
                   Partnership Details
                 </Button>
